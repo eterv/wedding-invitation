@@ -1,0 +1,28 @@
+# build output
+build/
+dist/
+
+# generated types
+/.astro
+/.next
+/.svelte-kit
+/.wrangler
+
+# dependencies
+node_modules/
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# OS specific files
+.DS_Store
+
+# Private folders
+.local
+
+# Package manager lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
