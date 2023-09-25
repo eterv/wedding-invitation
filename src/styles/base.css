@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  src: url('/fonts/Bahagia.woff') format('woff');
+  font-family: 'Bahagia';
+  font-weight: 400;
+  font-display: swap;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+:root {
+  --black1: 1e2228;
+}
+
+html,
+body {
+  font-family:
+    'Noto Sans',
+    'Noto Sans CJK KR',
+    -apple-system,
+    BlinkMacSystemFont,
+    'NotoSansKR',
+    sans-serif;
+  font-size: 16px;
+}
+
+body {
+  @apply select-none overflow-y-auto overflow-x-hidden bg-black1;
+}
+
+input,
+textarea {
+  @apply w-full rounded-4 border border-grayE p-12;
+}
+
+textarea {
+  @apply resize-none;
+}
