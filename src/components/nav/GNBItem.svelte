@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scrollToElement } from '../../utils';
+  import { scrollToElement } from '$lib/utils';
 
   export let dest: string;
   export let text: string;
@@ -15,7 +15,7 @@
 
 <button
   bind:this={el}
-  class="flex h-48 flex-1 items-center justify-center text-sm text-white"
+  class="text-sm flex h-48 flex-1 items-center justify-center text-white"
   data-dest={dest}
   on:click={onClick}
 >
