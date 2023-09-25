@@ -1,12 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+<!doctype html>
+<html lang="%lang%">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <link
+      rel="icon"
+      href="%sveltekit.assets%/favicon/favicon-16.png"
+      sizes="16x16"
+    />
+    <link
+      rel="icon"
+      href="%sveltekit.assets%/favicon/favicon-32.png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      href="%sveltekit.assets%/favicon/favicon-128.png"
+      sizes="128x128"
+    />
+
+    %sveltekit.head%
+  </head>
+
+  <body data-sveltekit-preload-data="hover">
+    <div class="contents">%sveltekit.body%</div>
+  </body>
 </html>
