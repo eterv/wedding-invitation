@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Comments from '$lib/comments/Comments.svelte';
   import BGM from '~/components/bgm/BGM.svelte';
   import Gallery from '~/components/gallery/Gallery.svelte';
   import Headline from '~/components/headline/Headline.svelte';
@@ -7,7 +8,6 @@
   import Message from '~/components/invitation/Message.svelte';
   import Notice from '~/components/invitation/Notice.svelte';
   import Share from '~/components/share/Share.svelte';
-  import Comments from '~/modules/comments/Comments.svelte';
 </script>
 
 <div id="top" />
