@@ -6,7 +6,7 @@
   "bride.parent": "김X택 · 박X란",
   "command.delete": "삭제",
   "command.edit": "수정하기",
-  "comment.dateFormat": "YYYY년 M월 D일",
+  "comment.dateFormat": "YYYY년 M월 D일 HH:mm:ss",
   "field.name": "이름",
   "field.password": "비밀번호",
   "field.body": "내용",
@@ -36,5 +36,6 @@
   "og.desc": "광원♡희인 6월 27일 토요일 결혼합니다!",
   "og.title": "광원♡희인 6월 27일 토요일 결혼합니다!",
   "title": "GW & HI - Wedding Invitation - 2020. 6. 27",
-  "validator.empty": "{field} 필드를 입력해 주세요."
+  "validator.empty": "{field} 필드를 입력해 주세요.",
+  "validator.wrong": "잘못된 {field} 입니다."
 }
