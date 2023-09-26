@@ -2,17 +2,16 @@
   import { onMount } from 'svelte';
 
   import CommentItem from './CommentItem.svelte';
-  import { getComments, type Comment } from './model';
-
-  let comments: Comment[] = [];
+  import { getComments } from './model';
+  import { comments } from './store';
 
   onMount(async () => {
-    comments = await getComments();
+    $comments = await getComments();
   });
 </script>
 
 <div>
-  {#each comments as comment}
+  {#each $comments as comment ((comment.id, comment.name, comment.body))}
     <CommentItem {comment} />
   {/each}
 </div>

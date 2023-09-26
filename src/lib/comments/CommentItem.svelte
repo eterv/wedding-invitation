@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { editModalVisible, editingComment } from './store';
 
   import type { Comment } from './model';
 
+  import { t } from '~/lib/i18n';
   import { formatDate, nl2br } from '~/lib/utils';
 
   export let comment: Comment;
 
-  const { id, name, password, body } = comment;
+  const { name, body } = comment;
 
-  const createdAt = formatDate('YYYY년 M월 D일', new Date(comment.createdAt));
+  const createdAt = formatDate($t('comment.dateFormat'), comment.createdAt);
 
   const edit = () => {
     $editingComment = comment;

@@ -1,7 +1,18 @@
 const REGEX_FORMAT =
   /\[([^\]]+)]|Y{1,4}|M{1,2}|D{1,2}|d{1}|H{1,2}|h{1,2}|A|m{1,2}|s{1,2}|SSS/g;
+const timezoneOffsetMinutes = new Date().getTimezoneOffset();
 
 const padZero = (v: unknown, length = 2) => String(v).padStart(length, '0');
+
+export function fromMySQLToLocalDate(dateStr: string) {
+  const iso = dateStr.replace(' ', 'T') + 'Z';
+  const timestamp = new Date(iso).getTime() - timezoneOffsetMinutes * 60 * 1000;
+  return new Date(timestamp);
+}
+
+export function toMySQLDate(date: Date) {
+  return formatDate('YYYY-MM-DD HH:mm:ss', date);
+}
 
 export function formatDate(format: string, dateValue: string | number | Date) {
   const date = new Date(dateValue);

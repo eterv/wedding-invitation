@@ -1,9 +1,11 @@
 <script lang="ts">
   import { addComment, type Comment } from './model';
+  import { comments } from './store';
 
   import type { Union } from '~/types';
 
   import { t } from '$lib/i18n';
+  import { scrollToElement } from '$lib/utils';
   import Icon from '~/components/icon/Icon.svelte';
 
   export let visible = false;
@@ -23,24 +25,38 @@
     body: { value: '' },
   };
 
-  const send = async () => {
+  const add = async () => {
     // Validate fields
-    fieldNames.every((field) => {
-      if (fields[field].value.trim() === '') {
-        alert($t('validator.empty', { field: $t(`field.${field}`) }));
-        fields[field].element?.focus();
+    const isValid = fieldNames.every((fieldName) => {
+      if (fields[fieldName].value.trim() === '') {
+        alert($t('validator.empty', { field: $t(`field.${fieldName}`) }));
+        fields[fieldName].element?.focus();
         return false;
       }
 
       return true;
     });
+    if (!isValid) return;
 
     const data = Object.entries(fields).reduce(
       (obj, [name, { value }]) => ({ ...obj, [name]: value }),
       {},
     ) as Pick<Comment, 'name' | 'password' | 'body'>;
 
-    await addComment(data);
+    const newComment = await addComment(data);
+
+    if (newComment) {
+      comments.update((prev) => {
+        return [newComment, ...prev];
+      });
+
+      // Reset fields
+      fieldNames.forEach((fieldName) => {
+        fields[fieldName].value = '';
+      });
+
+      scrollToElement('#comment');
+    }
   };
 </script>
 
@@ -73,7 +89,7 @@
       bind:value={fields.body.value}
     />
 
-    <button class="ml-8 rounded-4 bg-lightBlue px-16" on:click={send}>
+    <button class="ml-8 rounded-4 bg-lightBlue px-16" on:click={add}>
       <Icon name="send" color="white" />
     </button>
   </div>
