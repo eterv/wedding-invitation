@@ -1,8 +1,12 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
+  import { lang, t } from '$lib/i18n';
+  import { config } from '~/app.config';
   import GNB from '~/components/nav/GNB.svelte';
 
   import '~/styles/base.css';
+
+  const ogUrl =
+    $lang === 'ko' ? config.publicHost : config.publicHost + `/${$lang}`;
 </script>
 
 <svelte:head>
@@ -12,10 +16,10 @@
   <meta property="og:title" content={$t('og.title')} />
   <meta
     property="og:image"
-    content="https://wedding.eterv.com/images/intro/intro.jpg"
+    content={`${config.publicHost}/images/intro/intro.jpg`}
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wedding.eterv.com" />
+  <meta property="og:url" content={ogUrl} />
 
   <title>{$t('title')}</title>
 </svelte:head>

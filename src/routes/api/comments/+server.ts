@@ -1,6 +1,6 @@
+import { hash, verify } from '@node-rs/argon2';
 import { Connection, connect } from '@planetscale/database';
 import { json } from '@sveltejs/kit';
-import { hash, verify } from 'argon2';
 
 import type { Comment } from '$lib/comments/model';
 import type { RequestHandler } from './$types';
