@@ -6,6 +6,7 @@ dist/
 /.astro
 /.next
 /.svelte-kit
+/.vercel
 /.wrangler
 
 # dependencies
