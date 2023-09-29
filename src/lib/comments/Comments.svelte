@@ -33,8 +33,8 @@
   });
 </script>
 
-<div id="comment" class="pt-48" bind:this={element}>
-  <div class="mb-32 text-center font-bahagia text-28 text-grayC">
+<div class="pt-48" bind:this={element}>
+  <div id="comment" class="mb-32 text-center font-bahagia text-28 text-grayC">
     Congratulation
   </div>
 
