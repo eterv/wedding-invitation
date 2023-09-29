@@ -3,6 +3,7 @@
 
   import AppButton from './AppButton.svelte';
 
+  import { config } from '~/app.config';
   import Icon from '~/components/icon/Icon.svelte';
   import { t } from '~/lib/i18n';
   import {
@@ -21,7 +22,7 @@
 
   let mapArea: HTMLDivElement;
 
-  const address = $t('info.address');
+  const { address } = config;
   const place = $t('info.place');
 
   const openGoogleMap = () => {
@@ -105,7 +106,7 @@
   </div>
 
   <div class="text-center text-14 text-grayA">
-    <div>{address}</div>
+    <div>{@html $t('info.address')}</div>
     <div class="mt-4">TEL. {$t('info.contact')}</div>
   </div>
 

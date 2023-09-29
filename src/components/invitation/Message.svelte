@@ -1,7 +1,7 @@
 <script lang="ts">
   import PageContainer from '../container/PageContainer.svelte';
 
-  import { t } from '~/lib/i18n';
+  import { lang, t } from '~/lib/i18n';
 </script>
 
 <div class="bg-whiteF2 py-48 text-center">
@@ -33,9 +33,12 @@
       <div>
         {@html $t('message.desc')}
       </div>
-      <div class="mt-16 text-14">
-        {@html $t('message.desc2')}
-      </div>
+
+      {#if $lang === 'ko'}
+        <div class="mt-16 text-14">
+          {@html $t('message.desc2')}
+        </div>
+      {/if}
     </div>
   </PageContainer>
 </div>
