@@ -26,6 +26,7 @@ const config = {
 
     adapter: vercelAdapter({
       runtime: 'nodejs18.x',
+      regions: ['pdx1'], // Portland, USA
     }),
   },
 };
