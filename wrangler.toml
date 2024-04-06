@@ -1,0 +1,7 @@
+name = "wedding-astro"
+compatibility_date = "2023-09-04"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "wedding"
+# database_id = "50e094ed-e2a3-43f6-aac7-f38f08cbd73e"

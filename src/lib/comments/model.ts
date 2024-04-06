@@ -1,15 +1,17 @@
+import dayjs from 'dayjs';
+
 import type { HttpMethod } from '@sveltejs/kit';
+import type { Dayjs } from 'dayjs';
 
 import { WrongPasswordError } from '$lib/error';
-import { fromMySQLToLocalDate } from '$lib/utils';
 
 export interface Comment {
   id: string;
   name: string;
   password: string;
   body: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Dayjs;
+  updatedAt: Dayjs;
 }
 
 async function fetchComment(method: HttpMethod, data?: Record<string, any>) {
@@ -26,7 +28,7 @@ export async function addComment(
   const res = await fetchComment('POST', data);
 
   const newData: Comment = await res.json();
-  newData.createdAt = fromMySQLToLocalDate(newData.createdAt as any as string);
+  newData.createdAt = dayjs(newData.createdAt);
 
   return newData;
 }
@@ -47,7 +49,7 @@ export async function getComments(): Promise<Comment[]> {
   const newItems = items.map((item) => {
     return {
       ...item,
-      createdAt: fromMySQLToLocalDate(item.createdAt as any as string),
+      createdAt: dayjs(item.createdAt),
     } as Comment;
   });
 
@@ -62,9 +64,7 @@ export async function updateComment(
   if (res.status === 401) throw new WrongPasswordError();
 
   const updatedData: Comment = await res.json();
-  updatedData.updatedAt = fromMySQLToLocalDate(
-    updatedData.updatedAt as any as string,
-  );
+  updatedData.updatedAt = dayjs(updatedData.updatedAt);
 
   return updatedData;
 }

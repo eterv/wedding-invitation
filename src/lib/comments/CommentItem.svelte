@@ -10,7 +10,7 @@
 
   const { name, body } = comment;
 
-  const createdAt = formatDate($t('comment.dateFormat'), comment.createdAt);
+  const createdAt = formatDate(comment.createdAt, $t('comment.dateFormat'));
 
   const edit = () => {
     $editingComment = comment;

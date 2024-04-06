@@ -1,38 +1,18 @@
 import { hash, verify } from '@node-rs/argon2';
-import { Connection, connect } from '@planetscale/database';
 import { json } from '@sveltejs/kit';
+import dayjs from 'dayjs';
 
 import type { Comment } from '$lib/comments/model';
 import type { RequestHandler } from './$types';
 
-import { DB_HOST, DB_PASS, DB_USER } from '$env/static/private';
-import { toMySQLDate } from '$lib/utils';
-
-type ExecuteArgs = object | any[] | null;
-
-let conn: Connection;
-
-function connDatabase() {
-  if (conn == null) {
-    conn = connect({
-      host: DB_HOST,
-      username: DB_USER,
-      password: DB_PASS,
-    });
-  }
-}
-
-async function execute(query: string, args?: ExecuteArgs) {
-  connDatabase();
-  return await conn.execute(query, args);
-}
+import { pool } from '~/lib/server/db';
 
 async function findById<T>(
   id: string,
   select: string[] = ['*'],
 ): Promise<T | null> {
-  const { rows } = await execute(
-    `SELECT ${select.join(', ')} FROM comments WHERE id = ?`,
+  const { rows } = await pool.query(
+    `SELECT ${select.join(', ')} FROM comments WHERE id = $1`,
     [id],
   );
   if (!rows.length) return null;
@@ -41,7 +21,7 @@ async function findById<T>(
 }
 
 async function deleteById(id: string) {
-  const { rows } = await execute('DELETE FROM comments WHERE id = ?', [id]);
+  const { rows } = await pool.query('DELETE FROM comments WHERE id = $1', [id]);
   return !!rows.length;
 }
 
@@ -56,11 +36,19 @@ async function matchPassword(id: string, password: string) {
  * Get all comments
  */
 export const GET: RequestHandler = async () => {
-  const result = await execute(
-    'SELECT * FROM comments ORDER BY createdAt DESC',
+  const result = await pool.query(
+    'SELECT id, name, body, created_at, updated_at FROM comments ORDER BY created_at DESC',
   );
 
-  return json(result.rows);
+  return json(
+    result.rows.map(({ id, name, body, created_at, updated_at }) => ({
+      id,
+      name,
+      body,
+      createdAt: created_at,
+      updatedAt: updated_at,
+    })),
+  );
 };
 
 /**
@@ -71,18 +59,16 @@ export const POST: RequestHandler = async ({ request }) => {
   const id = crypto.randomUUID();
   const pw = await hash(password);
 
-  const currentDt = toMySQLDate(new Date());
-
-  const result = await execute(
-    'INSERT INTO comments (id, name, password, body, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)',
-    [id, name, pw, body, currentDt, currentDt],
+  const result = await pool.query(
+    'INSERT INTO comments (id, name, password, body, created_at, updated_at) VALUES ($1, $2, $3, $4, NOW(), NOW())',
+    [id, name, pw, body],
   );
 
   if (!result) {
     return json({ message: 'Failed to add comment' }, { status: 500 });
   }
 
-  return json({ id, name, body, createdAt: currentDt });
+  return json({ id, name, body, createdAt: dayjs.utc().format() });
 };
 
 /**
@@ -96,18 +82,16 @@ export const PATCH: RequestHandler = async ({ request }) => {
     return json(null, { status: 401 });
   }
 
-  const currentDt = toMySQLDate(new Date());
-
-  const result = await execute(
-    'UPDATE comments SET name = ?, body = ?, updatedAt = ? WHERE id = ?',
-    [name, body, currentDt, id],
+  const result = await pool.query(
+    'UPDATE comments SET name = $1, body = $2, updated_at = NOW() WHERE id = $3',
+    [name, body, id],
   );
 
   if (!result) {
     return json({ message: 'Failed to update comment' }, { status: 500 });
   }
 
-  return json({ id, name, body, updatedAt: currentDt });
+  return json({ id, name, body, updatedAt: dayjs.utc().format() });
 };
 
 /**

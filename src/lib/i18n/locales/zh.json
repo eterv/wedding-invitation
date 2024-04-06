@@ -6,7 +6,7 @@
   "bride.parent": "金X泽 · 朴X兰",
   "command.delete": "Delete",
   "command.edit": "Modify",
-  "comment.dateFormat": "YYYY年 M月 D日",
+  "comment.dateFormat": "YYYY年 M月 D日 HH:mm",
   "field.name": "Name",
   "field.password": "Password",
   "field.body": "Message",
